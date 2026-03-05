@@ -77,8 +77,8 @@
     line-height: 1;
     margin-bottom: 28px;
     opacity: 0;
-    animation: fadeUp 1s 0.5s forwards;
   }
+  .hero-ready .hero-logo { animation: fadeUp 1s 0.2s forwards; }
   .hero-logo-mp3 {
     font-family: 'Copperplate Gothic', 'Copperplate', 'Papyrus', serif;
     font-size: clamp(3.5rem, 8vw, 7rem);
@@ -146,10 +146,11 @@
   .hero-line {
     position: absolute;
     top: 0; left: 50%; transform: translateX(-50%);
-    width: 1px; height: 120px;
+    width: 1px; height: 0;
     background: linear-gradient(to bottom, transparent, var(--gold));
-    animation: lineDown 1.5s ease forwards;
+    opacity: 0;
   }
+  .hero-ready .hero-line { animation: lineDown 1.5s ease forwards; }
   @keyframes lineDown { from { height: 0; opacity: 0; } to { height: 120px; opacity: 1; } }
 
   .hero-tag {
@@ -159,8 +160,8 @@
     color: var(--gold);
     margin-bottom: 28px;
     opacity: 0;
-    animation: fadeUp 1s 0.5s forwards;
   }
+  .hero-ready .hero-tag { animation: fadeUp 1s 0.4s forwards; }
   .hero h1 {
     font-family: 'Cormorant Garamond', serif;
     font-size: clamp(4rem, 9vw, 8rem);
@@ -169,8 +170,8 @@
     letter-spacing: 8px;
     text-transform: uppercase;
     opacity: 0;
-    animation: fadeUp 1s 0.7s forwards;
   }
+  .hero-ready .hero h1 { animation: fadeUp 1s 0.6s forwards; }
   .hero h1 em {
     font-style: italic;
     color: var(--gold);
@@ -185,14 +186,14 @@
     margin-top: 20px;
     letter-spacing: 2px;
     opacity: 0;
-    animation: fadeUp 1s 0.9s forwards;
   }
+  .hero-ready .hero-sub { animation: fadeUp 1s 0.8s forwards; }
   .hero-divider {
     display: flex; align-items: center; gap: 16px;
     margin: 36px 0;
     opacity: 0;
-    animation: fadeUp 1s 1.1s forwards;
   }
+  .hero-ready .hero-divider { animation: fadeUp 1s 1.0s forwards; }
   .hero-divider span { width: 60px; height: 1px; background: var(--gold); }
   .hero-divider i { font-size: 0.7rem; letter-spacing: 4px; color: var(--gold); font-style: normal; }
   .btn-gold {
@@ -208,8 +209,8 @@
     overflow: hidden;
     transition: color 0.4s;
     opacity: 0;
-    animation: fadeUp 1s 1.3s forwards;
   }
+  .hero-ready .btn-gold { animation: fadeUp 1s 1.2s forwards; }
   .btn-gold::before {
     content: '';
     position: absolute; inset: 0;
@@ -295,7 +296,45 @@
     background: linear-gradient(135deg, var(--dark) 0%, var(--black) 100%);
     text-align: center;
   }
-  .services-section .section-title { margin-bottom: 60px; }
+  .services-section .section-title { margin-bottom: 40px; }
+
+  .btn-play-intro {
+    display: inline-flex; align-items: center; gap: 14px;
+    background: none; border: none; cursor: pointer;
+    margin-bottom: 60px;
+    padding: 0;
+    color: var(--gold);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    position: relative;
+    transition: opacity 0.3s;
+  }
+  .btn-play-intro:hover { opacity: 0.75; }
+  .btn-play-ring {
+    display: flex; align-items: center; justify-content: center;
+    width: 52px; height: 52px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .btn-play-ring::after {
+    content: '';
+    position: absolute; inset: -6px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.25);
+    animation: ringPulse 2s ease-in-out infinite;
+  }
+  @keyframes ringPulse {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.15); opacity: 0; }
+  }
+  .btn-play-ring svg {
+    width: 16px; height: 16px;
+    margin-left: 2px;
+  }
   .services-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -395,6 +434,57 @@
   .gallery-item:hover { transform: scale(1.03); border-color: var(--gold); }
 
   /* LIGHTBOX */
+  /* VIDEO INTRO */
+  .video-intro {
+    position: fixed; inset: 0;
+    z-index: 1000;
+    background: rgba(0,0,0,0.96);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+  }
+  .video-intro.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .video-intro-inner {
+    position: relative;
+    width: min(520px, 90vw);
+    aspect-ratio: 1 / 1;
+  }
+  .video-intro-inner iframe {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    border: none;
+    border-radius: 4px;
+  }
+  .video-intro-close {
+    position: absolute;
+    top: -44px; right: 0;
+    background: none; border: none;
+    color: var(--gold);
+    font-size: 1.6rem;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+    line-height: 1;
+  }
+  .video-intro-close:hover { opacity: 1; }
+  .video-intro-skip {
+    position: absolute;
+    bottom: -40px; left: 50%; transform: translateX(-50%);
+    background: none; border: 1px solid rgba(201,168,76,0.4);
+    color: rgba(245,240,235,0.5);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 8px 24px;
+    cursor: pointer;
+    transition: border-color 0.3s, color 0.3s;
+  }
+  .video-intro-skip:hover { border-color: var(--gold); color: var(--gold); }
+
   .lightbox {
     position: fixed; inset: 0;
     z-index: 999;
@@ -597,6 +687,17 @@
     transition: background 0.3s, border-color 0.3s;
   }
   .social-links a:hover { background: var(--gold); color: var(--black); }
+  .footer-ai {
+    border-top: 1px solid rgba(201,168,76,0.06);
+    padding-top: 18px;
+    margin-top: 18px;
+    text-align: center;
+  }
+  .footer-ai p {
+    font-size: 0.55rem;
+    letter-spacing: 1.5px;
+    color: rgba(245,240,235,0.18);
+  }
 
   .gold-line {
     display: flex; align-items: center; gap: 20px;
@@ -697,6 +798,12 @@
 <section id="uslugi" class="services-section">
   <p class="section-label">✦ Nasze Usługi</p>
   <h2 class="section-title">Wyjątkowe doświadczenia,<em>na miarę Twoich pragnień</em></h2>
+  <button class="btn-play-intro" onclick="reopenIntro()" title="Odtwórz intro">
+    <span class="btn-play-ring">
+      <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6,4 20,12 6,20"/></svg>
+    </span>
+    <span class="btn-play-label">Odtwórz intro</span>
+  </button>
   <div class="services-grid">
     <div class="service-card">
       <span class="service-icon material-symbols-outlined">health_and_beauty</span>
@@ -777,11 +884,11 @@
       <div class="gallery-overlay"><span>Stardust Gel</span></div>
     </div>
     <div class="gallery-item">
-      <img src="https://drive.google.com/thumbnail?id=1VD4iKLJm85h483V9iH0S1Hem2BFM3KF1&sz=w800" alt="Obrazek 4">
+      <img src="https://drive.google.com/thumbnail?id=1CHhZV3t9NI-vMSv3GiJKkbl8DpRBPkih&sz=w800" alt="Obrazek 4">
       <div class="gallery-overlay"><span>Cherry Blossom</span></div>
     </div>
     <div class="gallery-item">
-      <img src="https://drive.google.com/thumbnail?id=1IBdFO_62fAQhOBNPQnWgGpgdu0AF6E57&sz=w800" alt="Obrazek 5">
+      <img src="https://drive.google.com/thumbnail?id=1XIn4EXwGYcEETCR_0e9BTyIptUarVM6t&sz=w800" alt="Obrazek 5">
       <div class="gallery-overlay"><span>Glitter Gold</span></div>
     </div>
     <div class="gallery-item">
@@ -842,19 +949,36 @@
     <div class="footer-col">
       <h4>Kontakt</h4>
       <a href="tel:+48000000000">+48 000 000 000</a>
-      <a href="/cdn-cgi/l/email-protection#ea879ad9848b838699b5999e9f8e8385aa82859e878b8386c4898587"><span class="__cf_email__" data-cfemail="a0cdd093cec1c9ccd3ffd3d4d5c4c9cfe0c8cfd4cdc1c9cc8ec3cfcd">[email&#160;protected]</span></a>
+      <a href="mailto:mp3nails_studio@hotmail.com">mp3nails_studio@hotmail.com</a>
       <p>ul. Miyasato 69<br>00-000 Okusima</p>
     </div>
   </div>
   <div class="footer-bottom">
     <p>© 2025 MP3 Nails Studio. Wszelkie prawa zastrzeżone.</p>
     <div class="social-links">
-      <a href="#">IG</a>
+      <a href="https://www.instagram.com/mp3nails_studio/" target="_blank" rel="noopener">IG</a>
       <a href="#">FB</a>
       <a href="#">TK</a>
     </div>
   </div>
+  <div class="footer-ai">
+    <p>✦ Intro wygenerowane przez sztuczną inteligencję wspomaganą narzędziem Grok by xAI</p>
+  </div>
 </footer>
+
+<!-- VIDEO INTRO -->
+<div class="video-intro hidden" id="videoIntro" style="display:none">
+  <div class="video-intro-inner">
+    <button class="video-intro-close" id="videoClose">✕</button>
+    <iframe
+      loading="lazy"
+      src=""
+      allowfullscreen="allowfullscreen"
+      allow="fullscreen">
+    </iframe>
+    <button class="video-intro-skip" id="videoSkip">Pomiń intro</button>
+  </div>
+</div>
 
 <div class="lightbox" id="lightbox">
   <div class="lightbox-inner">
@@ -874,6 +998,9 @@
     p.style.cssText=`left:${Math.random()*100}%;width:${Math.random()*3+1}px;height:${Math.random()*3+1}px;animation-duration:${Math.random()*15+8}s;animation-delay:${Math.random()*10}s;`;
     pc.appendChild(p);
   }
+
+  // Od razu odpala animacje hero (brak intra na starcie)
+  document.querySelector('.hero').classList.add('hero-ready');
 
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', ()=>{
@@ -960,5 +1087,38 @@
     }
   }
 
+  // VIDEO INTRO
+  const videoIntro = document.getElementById('videoIntro');
+  const videoIframe = videoIntro.querySelector('iframe');
+
+  function closeIntro() {
+    // Zatrzymaj dźwięk/video — wyczyść src iframe
+    videoIframe.src = '';
+
+    videoIntro.classList.add('hidden');
+    setTimeout(() => { videoIntro.style.display = 'none'; }, 500);
+
+    // Odpala animacje hero dopiero teraz
+    document.querySelector('.hero').classList.add('hero-ready');
+  }
+  const INTRO_SRC = "https://www.canva.com/design/DAHDFciCb-Q/JlDt-csHoVs2ninlfwv0IQ/watch?embed";
+
+  function reopenIntro() {
+    videoIframe.src = INTRO_SRC;
+    videoIntro.style.display = '';
+    requestAnimationFrame(() => videoIntro.classList.remove('hidden'));
+  }
+
+  document.getElementById('videoClose').addEventListener('click', closeIntro);
+  document.getElementById('videoSkip').addEventListener('click', closeIntro);
+  videoIntro.addEventListener('click', e => { if(e.target === videoIntro) closeIntro(); });
+
   const ao = new IntersectionObserver(entries=>{
-  
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('visible'); ao.unobserve(e.target); }
+    });
+  },{threshold:0.15});
+  document.querySelectorAll('.animate').forEach(el=>ao.observe(el));
+</script>
+</body>
+</html>
